@@ -8,6 +8,14 @@
 > 这是一个小范围、单机验证过的实验，**不是**通用音质改造方案。
 > 未验证左右声道分离，不承诺"iPhone 音质"或硬件安全，也没有后台常驻进程。
 
+## AI 生成声明
+
+本项目新增的适配补丁、`customize.sh`、构建与测试脚本、CI 配置及文档由 **AI 生成并整理**。
+设备持有者提供了真机低音量试听与反馈；这些反馈不等于完整的人工代码审查或硬件安全验证。
+
+Magisk 安装器、LineageOS 原始音频配置及其许可证来自上游，**并非 AI 原创**；
+它们的来源、版权与许可声明继续保留，详见 [NOTICE.md](NOTICE.md) 和 [provenance/](provenance/)。
+
 ## 改了什么
 
 `speaker_output` 路径（HAL 的外放路由；媒体/铃声/免提在选择该路径时会打开听筒）：
@@ -103,7 +111,7 @@ Magisk 应用里禁用或删除 `earth_dual_speaker` → 重启 → `/vendor` �
 需要 **PowerShell 7+**（`pwsh`）。
 
 - Windows 本机实测可用。
-- Ubuntu CI（`.github/workflows/build.yml`，带预装 `pwsh`）已配置，但**尚未在 GitHub Actions 上实际执行**。
+- Ubuntu GitHub Actions 的构建及 9 项安装守卫测试已通过：[首次运行记录](https://github.com/yzzz272/redmi12c-dualspeaker/actions/runs/43637935762)。这不等于完成了真机安装或硬件安全验证。
 - macOS、其他 Linux 发行版等平台**未测试**。
 
 ```powershell
@@ -165,6 +173,12 @@ docs/                           发布、测试、发布说明
 ZIP 内共 9 个条目，逐条来源见 `provenance/README.md`，许可范围汇总见 `NOTICE.md`。
 
 ## English summary
+
+**AI-generated project code:** The project-specific adaptation, `customize.sh`,
+build/test scripts, CI workflows and documentation were generated and organized
+by AI. The device owner supplied low-volume listening feedback, not a complete
+code audit or hardware-safety validation. Vendored Magisk and LineageOS files are
+upstream work, not AI-original, and retain their documented provenance and licenses.
 
 An experimental Magisk module for the Redmi 12C (`earth`) running LineageOS 21
 (`21.0-20240509-UNOFFICIAL-earth`, Android 14 / API 34, kernel tag

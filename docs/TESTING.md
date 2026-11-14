@@ -8,6 +8,7 @@
 | --- | --- |
 | 构建脚本静态校验（哈希 / 行尾 / XML / 语义差异 / 逐字节可还原 / ZIP 元数据） | 已做 |
 | 安装守卫免 root 测试（`tests/test-installer.sh`，9 个用例） | 已做 |
+| GitHub Actions（Ubuntu，构建与安装守卫测试） | [首次运行已通过](https://github.com/yzzz272/redmi12c-dualspeaker/actions/runs/43637935762) |
 | 真机手动试听：保持原 `LOL Mux=Playback`，设 `Handset_PGA_GAIN=4Db` + `RCV Mux=Voice Playback` | 已做，**仅一次短时**，媒体音量 3/15 |
 | 本模块 ZIP 的真机安装 | **未做** |
 | 安装后重启 | **未做** |
