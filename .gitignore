@@ -1,0 +1,23 @@
+# Local research material - never published.
+# The public build input lives in config/stock/audio_device.xml instead.
+/device-snapshot/
+/reference/
+/earpiece-probe.sh
+
+# Build output. Release ZIPs are attached to GitHub releases, not committed.
+/dist/
+
+# Local caches and OS noise
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*~
+*.tmp
+
+# Local tooling state
+/.pi/
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/

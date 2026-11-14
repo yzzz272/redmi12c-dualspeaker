@@ -1,0 +1,103 @@
+---
+name: Bug report
+description: 报告 earth_dual_speaker 实验模块的问题（请先脱敏）
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        这是**单机型实验模块**，只支持 Redmi 12C（`earth`）+ LineageOS 21
+        `21.0-20240509-UNOFFICIAL-earth` + 内核含 `e1d7983c7a49`。
+        其他机型/ROM 的行为不在支持范围内。
+
+        **请勿**贴序列号、IMEI、手机号、账号、MAC 地址、完整未脱敏的
+        `logcat` / `dumpsys` / `tinymix` 输出、完整 vendor dump 或含个人目录的绝对路径。
+        只贴与问题相关的片段，并先脱敏。
+
+  - type: input
+    id: device
+    attributes:
+      label: 机型
+      description: 例如 Redmi 12C (earth)
+    validations:
+      required: true
+
+  - type: input
+    id: rom
+    attributes:
+      label: ROM 版本
+      description: 输出 `getprop ro.lineage.version` 的值
+      placeholder: 21.0-20240509-UNOFFICIAL-earth
+    validations:
+      required: true
+
+  - type: input
+    id: kernel
+    attributes:
+      label: 内核版本
+      description: 输出 `uname -r` 的值
+      placeholder: 4.19.306-perf-07808-ge1d7983c7a49
+    validations:
+      required: true
+
+  - type: input
+    id: magisk
+    attributes:
+      label: Magisk 版本
+      description: Magisk 应用里显示的版本号
+      placeholder: "31.1"
+    validations:
+      required: true
+
+  - type: input
+    id: module
+    attributes:
+      label: 模块版本
+      description: release 页面上的版本号
+      placeholder: v0.1.0-experimental
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      description: 尽量具体，例如音量档位、使用的播放器、是否插耳机
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望行为
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: 实际行为
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 相关日志片段（已脱敏）
+      description: 只贴与问题相关的片段；没有就留空
+      render: text
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: 确认
+      options:
+        - label: 我已确认内容中没有序列号、手机号、账号、完整未脱敏日志或私有路径
+          required: true
+        - label: 我使用的是 release 里的模块 ZIP，而不是 GitHub 自动生成的 Source code 压缩包
+          required: true
+        - label: 我了解这是实验模块、很多行为尚未验证，我仍会如实报告观察到的现象
+          required: true

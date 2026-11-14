@@ -1,0 +1,6 @@
+id=earth_dual_speaker
+name=earth dual speaker (experimental)
+version=v0.1.0-experimental
+versionCode=1
+author=earth_dual_speaker contributors
+description=Systemless overlay of /vendor/etc/audio_device.xml that adds the receiver (+4dB) to the speaker_output path on Redmi 12C (earth). Experimental, not safety rated.

@@ -1,0 +1,96 @@
+---
+name: release
+
+# Runs only for version tags. The job creates a DRAFT PRERELEASE; nothing is
+# published until a maintainer reviews it and clicks Publish on GitHub.
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+jobs:
+  draft-release:
+    runs-on: ubuntu-latest
+    # Write access is limited to this job; it is needed to create the release.
+    permissions:
+      contents: write
+    steps:
+      # actions/checkout v7.0.1
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Validate the tag against module.prop
+        env:
+          TAG_NAME: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          version=$(sed -n 's/^version=//p' module/module.prop)
+          if [ -z "$version" ]; then
+            echo "module/module.prop does not declare a version" >&2
+            exit 1
+          fi
+          case "$TAG_NAME" in
+            v[0-9]*) ;;
+            *)
+              echo "tag '$TAG_NAME' is not a version tag" >&2
+              exit 1
+              ;;
+          esac
+          if [ "$TAG_NAME" != "$version" ]; then
+            echo "tag '$TAG_NAME' does not match module.prop version" >&2
+            echo "module.prop version: '$version'" >&2
+            exit 1
+          fi
+
+      - name: Shell syntax check
+        run: |
+          set -euo pipefail
+          bash -n module/customize.sh
+          bash -n tests/test-installer.sh
+          bash -n provenance/upstream/module_installer.sh
+
+      - name: Installer guard tests
+        run: bash tests/test-installer.sh
+
+      - name: Build module ZIP
+        run: pwsh -NoProfile -File ./build-module.ps1
+
+      - name: Verify the build reproduces the committed files
+        run: |
+          set -euo pipefail
+          git diff --exit-code -- \
+            module/system/vendor/etc/audio_device.xml \
+            module/META-INF
+
+      - name: Create draft prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG_NAME: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          zip_count=$(find dist -maxdepth 1 -name '*.zip' -type f | wc -l)
+          if [ "$zip_count" -ne 1 ]; then
+            echo "expected one ZIP in dist/, found $zip_count" >&2
+            exit 1
+          fi
+          zip=$(find dist -maxdepth 1 -name '*.zip' -type f)
+          sha="$zip.sha256"
+          if [ ! -f "$sha" ]; then
+            echo "missing checksum file: $sha" >&2
+            exit 1
+          fi
+          notes=$(mktemp)
+          cat docs/RELEASE_NOTES.md >"$notes"
+          {
+            printf '\n## 附件校验\n\n```text\n'
+            cat "$sha"
+            printf '```\n'
+          } >>"$notes"
+          gh release create "$TAG_NAME" "$zip" "$sha" \
+            --verify-tag \
+            --draft \
+            --prerelease \
+            --title "earth dual speaker $TAG_NAME (experimental)" \
+            --notes-file "$notes"

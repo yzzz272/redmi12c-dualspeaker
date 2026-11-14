@@ -1,0 +1,35 @@
+This module ZIP redistributes a modified copy of the LineageOS device-tree audio
+configuration as system/vendor/etc/audio_device.xml.
+
+Upstream project: LineageOS device tree for the Redmi 12C (earth)
+Upstream URL:     https://github.com/LineageOS/android_device_xiaomi_earth
+Pinned commit:    87007ad3e1ada83423abe0d560809b9a1c8ffda9
+                  ("earth: Configure Audio stack", 2024-03-28)
+Upstream file:    configs/audio/audio_device.xml
+Upstream raw URL: https://raw.githubusercontent.com/LineageOS/android_device_xiaomi_earth/87007ad3e1ada83423abe0d560809b9a1c8ffda9/configs/audio/audio_device.xml
+Git blob:         0601191b039b0a31fadea6700d84b2c412e0f1c1
+Upstream SHA256:  0d173c2bf7db1b8669926f23135596114f243458697c5dbfc2fa4572a88b56ba (35521 bytes)
+Modified SHA256:  11334e073a7d35b0151f6d4b912caa07544b320b3a4a637b8e5be6d90b06e50c
+
+License:          Apache License 2.0, as declared by the device-tree README
+                  (Copyright (C) 2023 The LineageOS Project,
+                  SPDX-License-Identifier: Apache-2.0). The XML file itself
+                  carries no per-file copyright or license header.
+                  This is not an official LineageOS release and is not
+                  endorsed by the LineageOS project.
+
+Modifications - these are the only changes; every other byte is preserved:
+
+  speaker_output/turnon   + <kctl name="Handset_PGA_GAIN" value="4Db" />
+                          + <kctl name="RCV Mux" value="Voice Playback" />
+  speaker_output/turnoff  + <kctl name="RCV Mux" value="Open" />
+                          + <kctl name="Handset_PGA_GAIN" value="8Db" />
+
+Exactly four lines are appended. No other line is added, removed, reordered or
+reformatted, and the XML declaration is unchanged. build-module.ps1 fails the
+build if the byte diff is not exactly those four lines.
+
+The full Apache License 2.0 text is redistributed next to this notice as
+audio_device.xml.LICENSE-Apache-2.0.txt (verbatim copy of
+https://www.apache.org/licenses/LICENSE-2.0.txt,
+SHA256 cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30).

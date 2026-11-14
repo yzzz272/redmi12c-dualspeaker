@@ -1,0 +1,17 @@
+# The build hashes config/stock/audio_device.xml and the generated XML, so every
+# text file must be checked out with LF on every platform (Windows included).
+* text=auto eol=lf
+
+*.sh   text eol=lf
+*.ps1  text eol=lf
+*.xml  text eol=lf
+*.prop text eol=lf
+*.md   text eol=lf
+*.txt  text eol=lf
+*.yml  text eol=lf
+*.yaml text eol=lf
+*.json text eol=lf
+
+# Release archives must never be line-ending translated.
+*.zip    binary
+*.sha256 text eol=lf
